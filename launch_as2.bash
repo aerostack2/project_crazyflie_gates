@@ -92,7 +92,7 @@ do
 done
 
 if [[ ${estimator_plugin} == "mocap_pose" ]]; then
-  tmuxinator start -n mocap -p utils/mocap.yml &
+  tmuxinator start -n mocap -p utils/mocap4ros2.yml &
   wait
 fi
 

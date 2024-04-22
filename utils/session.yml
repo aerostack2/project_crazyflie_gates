@@ -53,7 +53,7 @@ windows:
             namespace:=<%= drone_namespace %>
             use_sim_time:=<%= simulation %>
             plugin_name:=<%= estimator_plugin %>
-            plugin_config_file:=<%= config_path %>/state_estimator.yaml
+            plugin_config_file:=<%= config_path %>/<%= drone_namespace %>_state_estimator.yaml
   - controller:
       layout:
       panes:
