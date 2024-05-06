@@ -13,8 +13,8 @@ def generate_launch_description():
     rviz_config = os.path.join(os.getcwd(), 'rviz', 'gates_config.rviz')
     drone_0 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('as2_viz'), 'launch'),
-            '/as2_viz.launch.py']),
+            get_package_share_directory('as2_visualization'), 'launch'),
+            '/as2_visualization.launch.py']),
         launch_arguments={'rviz_config': rviz_config,
                           'namespace': 'cf0', 'color': 'green', 'use_sim_time': 'false',
                           'record_length': LaunchConfiguration('record_length')}.items(),
@@ -22,15 +22,15 @@ def generate_launch_description():
 
     drone_1 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('as2_viz'), 'launch'),
-            '/as2_viz.launch.py']),
+            get_package_share_directory('as2_visualization'), 'launch'),
+            '/as2_visualization.launch.py']),
         launch_arguments={'rviz': 'false',
                           'namespace': 'cf1', 'color': 'red', 'use_sim_time': 'false',
                           'record_length': LaunchConfiguration('record_length')}.items(),
     )
 
     sdf_file = os.path.join(get_package_share_directory(
-        'as2_ign_gazebo_assets'),
+        'as2_gazebo_assets'),
         'models', 'gate_viz', 'gate_viz.sdf')
 
     with open(sdf_file, 'r', encoding='utf-8') as infp:
