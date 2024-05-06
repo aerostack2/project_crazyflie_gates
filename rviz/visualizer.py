@@ -49,7 +49,7 @@ class MarkerPublisherNode(Node):
         self.marker_pub_2 = self.create_publisher(
             Marker, 'visualization_marker_3', 10)
         freq_uavs = 0.05
-        freq_gates = 0.1
+        freq_gates = 0.5
         self.timer_0 = self.create_timer(freq_uavs, self.publish_drone_0)
         self.timer_1 = self.create_timer(freq_uavs, self.publish_drone_1)
         self.timer_2 = self.create_timer(freq_gates, self.publish_gates)
@@ -66,8 +66,8 @@ class MarkerPublisherNode(Node):
         self.marker_pub_1.publish(quadrotor_marker_1)
 
     def publish_gates(self):
-        gate_marker_0 = self.create_gate_marker('gate_0', 2)
-        gate_marker_1 = self.create_gate_marker('gate_1', 3)
+        gate_marker_0 = self.create_gate_marker('gate_0/link', 2)
+        gate_marker_1 = self.create_gate_marker('gate_1/link', 3)
 
         self.marker_pub_2.publish(gate_marker_0)
         self.marker_pub_2.publish(gate_marker_1)
@@ -82,9 +82,9 @@ class MarkerPublisherNode(Node):
         quadrotor.type = Marker.MESH_RESOURCE
         quadrotor.mesh_resource = 'package://as2_gazebo_assets/models/quadrotor_base/meshes/quadrotor.dae'
         quadrotor.mesh_use_embedded_materials = True
-        quadrotor.scale.x = self.scale
-        quadrotor.scale.y = self.scale
-        quadrotor.scale.z = self.scale
+        quadrotor.scale.x = 0.9
+        quadrotor.scale.y = 0.9
+        quadrotor.scale.z = 0.9
         quadrotor.color.a = 1.0
         quadrotor.color.r = 1.0
         quadrotor.color.g = 1.0
@@ -101,7 +101,7 @@ class MarkerPublisherNode(Node):
         gate.id = id
         gate.ns = f'gate_{id}'
         gate.type = Marker.MESH_RESOURCE
-        gate.mesh_resource = 'models/gate.dae'
+        gate.mesh_resource = 'package://as2_gazebo_assets/models/aruco_gate_1/meshes/gate.dae'
         gate.mesh_use_embedded_materials = True
         gate.scale.x = self.scale
         gate.scale.y = self.scale
@@ -110,6 +110,7 @@ class MarkerPublisherNode(Node):
         gate.color.r = 0.7
         gate.color.g = 0.7
         gate.color.b = 0.7
+        gate.pose.position.z = 1.4
 
         return gate
 
