@@ -10,9 +10,9 @@ simulation_config   = @settings["simulation_config"]
 behavior_type       = "trajectory"
 
 if estimator_plugin == "mocap_pose"
-    platform_config_file = "real_config/cf_mocap.yaml"
+    config_file = "real_config/cf_mocap.yaml"
 elsif estimator_plugin == "raw_odometry"
-    platform_config_file = "real_config/cf_flowdeck.yaml"
+    config_file = "real_config/cf_flowdeck.yaml"
 end
 
 if simulation
@@ -42,7 +42,7 @@ windows:
             platform_config_file:=<%= config_file %>
   <%- elsif not simulation and base_launch %>
         - ros2 launch as2_platform_crazyflie crazyflie_swarm_launch.py
-            platform_config_file:=<%= platform_config_file %>
+            platform_config_file:=<%= config_file %>
             swarm_config_file:=real_config/swarm_config_file.yaml
   <%- end %>
   - state_estimator:
