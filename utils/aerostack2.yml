@@ -1,5 +1,3 @@
-# ~/.tmuxinator/project_crazyflie_basic.yml
-
 <%
 # Input parameters
 drone_namespace     = @settings["drone_namespace"]
@@ -12,9 +10,9 @@ simulation_config   = @settings["simulation_config"]
 behavior_type       = "trajectory"
 
 if estimator_plugin == "mocap_pose"
-    platform_config_file = "real_config/platform_config_mocap.yaml"
+    platform_config_file = "real_config/cf_mocap.yaml"
 elsif estimator_plugin == "raw_odometry"
-    platform_config_file = "real_config/platform_config_flowdeck.yaml"
+    platform_config_file = "real_config/cf_flowdeck.yaml"
 end
 
 if simulation
