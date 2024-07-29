@@ -13,25 +13,25 @@ def generate_launch_description():
     rviz_config = os.path.join(os.getcwd(), 'rviz', 'gates_config.rviz')
     drone_0 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('as2_viz'), 'launch'),
-            '/as2_viz.launch.py']),
+            get_package_share_directory('as2_visualization'), 'launch'),
+            '/as2_visualization.launch.py']),
         launch_arguments={'rviz_config': rviz_config,
-                          'namespace': 'cf0', 'color': 'green', 'use_sim_time': 'false',
+                          'namespace': 'cf0', 'use_sim_time': LaunchConfiguration('use_sim_time'),
                           'record_length': LaunchConfiguration('record_length')}.items(),
     )
 
     drone_1 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory('as2_viz'), 'launch'),
-            '/as2_viz.launch.py']),
+            get_package_share_directory('as2_visualization'), 'launch'),
+            '/as2_visualization.launch.py']),
         launch_arguments={'rviz': 'false',
-                          'namespace': 'cf1', 'color': 'red', 'use_sim_time': 'false',
+                          'namespace': 'cf1', 'use_sim_time': LaunchConfiguration('use_sim_time'),
                           'record_length': LaunchConfiguration('record_length')}.items(),
     )
 
     sdf_file = os.path.join(get_package_share_directory(
-        'as2_ign_gazebo_assets'),
-        'models', 'gate_viz', 'gate_viz.sdf')
+        'as2_gazebo_assets'),
+        'models', 'aruco_gate_1', 'aruco_gate_1.sdf')
 
     with open(sdf_file, 'r', encoding='utf-8') as infp:
         gate_desc = infp.read()
@@ -42,7 +42,7 @@ def generate_launch_description():
         name='robot_state_publisher',
         namespace='gate_0',
         parameters=[
-            {'use_sim_time': False},
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
             {'robot_description': gate_desc}
         ]
     )
@@ -53,12 +53,14 @@ def generate_launch_description():
         name='robot_state_publisher',
         namespace='gate_1',
         parameters=[
-            {'use_sim_time': False},
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
             {'robot_description': gate_desc}
         ]
     )
 
     return LaunchDescription([
+        DeclareLaunchArgument('use_sim_time', default_value='false',
+                              description='Use simulation time.'),
         DeclareLaunchArgument('record_length', default_value='500',
                               description='Length for last poses.'),
         drone_0,

@@ -1,0 +1,15 @@
+<%
+# Input parameters
+simulation = @settings["simulation"] == "true"
+%>
+
+name: rviz
+attach: true
+root: ./
+startup_window: rviz
+windows:
+  - rviz:
+      layout:
+      panes:
+        - ros2 launch rviz/gates_viz.launch.py
+            use_sim_time:=<%= simulation %>
