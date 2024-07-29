@@ -1,9 +1,10 @@
 ---
 objects:
-- type: pose
-  frame: gate_0/link
-  pose_topic: "/gate_0/ground_truth/pose"
-- type: pose
-  frame: gate_1/link
-  pose_topic: "/gate_1/ground_truth/pose"
-  
+- type: mocap
+  rigid_bodies:
+    - rigid_body: '8'
+      frame: gate_0/link
+- type: mocap
+  rigid_bodies:
+    - rigid_body: '9'
+      frame: gate_1/link  
