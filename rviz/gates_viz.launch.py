@@ -31,7 +31,7 @@ def generate_launch_description():
 
     sdf_file = os.path.join(get_package_share_directory(
         'as2_gazebo_assets'),
-        'models', 'aruco_gate_1', 'aruco_gate_1.sdf')
+        'models', 'gate_viz', 'gate_viz.sdf')
 
     with open(sdf_file, 'r', encoding='utf-8') as infp:
         gate_desc = infp.read()
