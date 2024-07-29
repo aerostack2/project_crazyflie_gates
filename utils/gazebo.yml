@@ -19,5 +19,4 @@ windows:
           use_sim_time:=<%= use_sim_time %>
           simulation_config_file:=<%= simulation_config %>
         - sleep 5; ros2 launch as2_external_object_to_tf as2_external_object_to_tf_launch.py
-            namespace:=cf0
             config_file:=sim_config/external_objects.yaml

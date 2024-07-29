@@ -18,6 +18,7 @@ elsif estimator_plugin == "raw_odometry"
 end
 
 if simulation
+    config_file     = "sim_config/cf_sim.yaml"
     config_path     = "sim_config"
 else
     config_path     = "real_config"
@@ -39,8 +40,8 @@ windows:
   <%- if simulation %>
         - ros2 launch as2_platform_gazebo platform_gazebo_launch.py
             namespace:=<%= drone_namespace %>
-            use_sim_time:=<%= simulation %>
             simulation_config_file:=<%= simulation_config %>
+            platform_config_file:=<%= config_file %>
   <%- elsif not simulation and base_launch %>
         - ros2 launch as2_platform_crazyflie crazyflie_swarm_launch.py
             platform_config_file:=<%= platform_config_file %>
@@ -51,32 +52,20 @@ windows:
       panes:
         - ros2 launch as2_state_estimator state_estimator_launch.py
             namespace:=<%= drone_namespace %>
-            use_sim_time:=<%= simulation %>
-            plugin_name:=<%= estimator_plugin %>
-            plugin_config_file:=<%= config_path %>/<%= drone_namespace %>_state_estimator.yaml
+            config_file:=<%= config_file %>
   - controller:
       layout:
       panes:
         - ros2 launch as2_motion_controller controller_launch.py
             namespace:=<%= drone_namespace %>
-            use_sim_time:=<%= simulation %>
-            plugin_name:=pid_speed_controller
-            motion_controller_config_file:=<%= config_path %>/motion_controller.yaml
+            config_file:=<%= config_file %>
             plugin_config_file:=<%= config_path %>/motion_controller_plugin.yaml     
   - behaviors:
       layout:
       panes:
         - ros2 launch as2_behaviors_motion motion_behaviors_launch.py
             namespace:=<%= drone_namespace %>
-            use_sim_time:=<%= simulation %>
-            follow_path_config_file:=<%= config_path %>/follow_path_config_file.yaml
-            follow_path_plugin_name:=follow_path_plugin_<%= behavior_type %>
-            go_to_config_file:=<%= config_path %>/go_to_config_file.yaml
-            go_to_plugin_name:=go_to_plugin_<%= behavior_type %>
-            takeoff_config_file:=<%= config_path %>/takeoff_config_file.yaml
-            takeoff_plugin_name:=takeoff_plugin_<%= behavior_type %>
-            land_config_file:=<%= config_path %>/land_config_file.yaml
-            land_plugin_name:=land_plugin_speed
+            config_file:=<%= config_file %>
         <%- if behavior_type == "trajectory" %>
         - ros2 launch as2_behaviors_trajectory_generation generate_polynomial_trajectory_behavior_launch.py
             namespace:=<%= drone_namespace %>

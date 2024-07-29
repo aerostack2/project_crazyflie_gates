@@ -87,7 +87,7 @@ do
     base_launch="false"
   fi 
 
-  tmuxinator start -n ${ns} -p utils/session.yml drone_namespace=${ns} base_launch=${base_launch}  estimator_plugin=${estimator_plugin} simulation=${simulated} simulation_config=${simulation_config} &
+  tmuxinator start -n ${ns} -p utils/aerostack2.yml drone_namespace=${ns} base_launch=${base_launch}  estimator_plugin=${estimator_plugin} simulation=${simulated} simulation_config=${simulation_config} &
   wait
 done
 
