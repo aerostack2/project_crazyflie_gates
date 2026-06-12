@@ -68,6 +68,7 @@ windows:
         - ros2 launch as2_behaviors_trajectory_generation generate_polynomial_trajectory_behavior_launch.py
             namespace:=<%= drone_namespace %>
             use_sim_time:=<%= simulation %>
+            plugin_name:=dynamic_mav_trajectory_generator
         <%- end %>
   <%- if base_launch %>
   - mission:
