@@ -33,7 +33,7 @@ windows:
       layout: tiled
       panes:
         - ros2 run as2_alphanumeric_viewer as2_alphanumeric_viewer_node
-            --ros-args -r  __ns:=/<%= drone_namespace %>
+            --ros-args -r  __ns:=/<%= drone_namespace %> -p use_sim_time:=<%= simulation %>
   - platform:
       layout: tiled
       panes:
