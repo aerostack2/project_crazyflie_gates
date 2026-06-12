@@ -18,8 +18,10 @@ end
 if simulation
     config_file     = "sim_config/cf_sim.yaml"
     config_path     = "sim_config"
+    state_estimator_config_file = "#{config_path}/state_estimator.yaml"
 else
     config_path     = "real_config"
+    state_estimator_config_file = "#{config_path}/#{drone_namespace}_state_estimator.yaml"
 end
 
 %>
@@ -50,7 +52,9 @@ windows:
       panes:
         - ros2 launch as2_state_estimator state_estimator_launch.py
             namespace:=<%= drone_namespace %>
+            use_sim_time:=<%= simulation %>
             config_file:=<%= config_file %>
+            plugin_config_file:=<%= state_estimator_config_file %>
   - controller:
       layout:
       panes:
