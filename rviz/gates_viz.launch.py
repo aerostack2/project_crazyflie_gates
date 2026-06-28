@@ -1,4 +1,5 @@
 import os
+from xml.etree import ElementTree
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -7,6 +8,46 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+
+
+def sdf2viz(sdf_file: str):
+    """Create SDF compatible to URDF conversion."""
+    tree = ElementTree.parse(sdf_file)
+
+    model = tree.find('./model')
+    model_pose = model.find('./pose')
+    if model_pose is not None:
+        model.remove(model_pose)
+
+    # Get path to the models
+    sdf_base_path = os.path.dirname(os.path.dirname(sdf_file))
+    # Replace all <uri> elements
+    for uri in tree.findall('.//uri'):
+        if uri.text.startswith('model://'):
+            # Extract the relative path after 'model://'
+            relative_path = uri.text.split('model://')[-1]
+            # Build the absolute path
+            absolute_path = os.path.join(sdf_base_path, relative_path)
+            # Update the URI text
+            if os.path.exists(absolute_path):
+                uri.text = f'file://{absolute_path}'
+            else:
+                raise FileNotFoundError(f'{absolute_path} not found')
+
+    for sensor_model in tree.findall('.//sensor/../..'):
+        sensor_name = sensor_model.attrib['name']
+        model.remove(sensor_model)
+
+        for joint in model.iter('joint'):
+            if joint.find('./child').text == sensor_name:
+                model.remove(joint)
+
+    # TODO(pariaspe): Avoid saving file and return directly the string
+    # return ElementTree.dump(tree)
+
+    new_file = os.path.join('/tmp/', os.path.basename(sdf_file))
+    tree.write(new_file)
+    return new_file
 
 
 def generate_launch_description():
@@ -31,9 +72,9 @@ def generate_launch_description():
 
     sdf_file = os.path.join(get_package_share_directory(
         'as2_gazebo_assets'),
-        'models', 'gate_viz', 'gate_viz.sdf')
+        'models', 'gate', 'gate.sdf')
 
-    with open(sdf_file, 'r', encoding='utf-8') as infp:
+    with open(sdf2viz(sdf_file), 'r', encoding='utf-8') as infp:
         gate_desc = infp.read()
 
     gate_0_state_publisher = Node(

@@ -115,9 +115,9 @@ if [[ ${simulated} == "true" ]]; then
 fi
 
 if [[ ${rviz} == "true" ]]; then
-  tmuxinator start -p utils/rviz.yml \
-      simulation=${simulated} \
-  wait
+    tmuxinator start -p utils/rviz.yml \
+        simulation=${simulated} &
+    wait
 fi
 
 # Attach to tmux session ${drone_ns[@]}, window 0

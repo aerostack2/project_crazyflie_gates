@@ -31,7 +31,7 @@ windows:
       layout: tiled
       panes:
         - ros2 run as2_alphanumeric_viewer as2_alphanumeric_viewer_node
-            --ros-args -r  __ns:=/<%= drone_namespace %>
+            --ros-args -r  __ns:=/<%= drone_namespace %> -p use_sim_time:=<%= simulation %>
   - platform:
       layout: tiled
       panes:
@@ -50,14 +50,16 @@ windows:
       panes:
         - ros2 launch as2_state_estimator state_estimator_launch.py
             namespace:=<%= drone_namespace %>
+            use_sim_time:=<%= simulation %>
             config_file:=<%= config_file %>
   - controller:
       layout:
       panes:
         - ros2 launch as2_motion_controller controller_launch.py
             namespace:=<%= drone_namespace %>
+            use_sim_time:=<%= simulation %>
             config_file:=<%= config_file %>
-            plugin_config_file:=<%= config_path %>/motion_controller_plugin.yaml     
+            plugin_config_file:=<%= config_path %>/motion_controller_plugin.yaml
   - behaviors:
       layout:
       panes:
@@ -68,6 +70,7 @@ windows:
         - ros2 launch as2_behaviors_trajectory_generation generate_polynomial_trajectory_behavior_launch.py
             namespace:=<%= drone_namespace %>
             use_sim_time:=<%= simulation %>
+            plugin_name:=dynamic_mav_trajectory_generator
         <%- end %>
   <%- if base_launch %>
   - mission:
