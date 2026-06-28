@@ -1,9 +1,11 @@
 ---
 objects:
 - type: pose
+  parent_frame: earth
   frame: gate_0/link
   pose_topic: "/gate_0/gate_0/pose"
 - type: pose
+  parent_frame: earth
   frame: gate_1/link
   pose_topic: "/gate_1/gate_1/pose"
   
