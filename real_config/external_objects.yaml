@@ -3,8 +3,8 @@ objects:
 - type: mocap
   rigid_bodies:
     - rigid_body: '8'
-      frame: gate_0/link
+      frame: gate_0/gate_link
 - type: mocap
   rigid_bodies:
     - rigid_body: '9'
-      frame: gate_1/link  
+      frame: gate_1/gate_link  
