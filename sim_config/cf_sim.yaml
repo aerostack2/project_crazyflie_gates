@@ -12,8 +12,7 @@
       plugin_name: ground_truth
       base_frame: ""  # Use gazebo tf tree to get base frame
       ground_truth:
-        # Gazebo publishes its own ground truth twist, so take it from there. The plugin
-        # default is empty, which differentiates the pose instead.
+        # Use twist from the simulator instead of default (differentiate the pose).
         twist_sub_topic: "ground_truth/twist"
   controller_manager:
     ros__parameters:
