@@ -10,7 +10,10 @@
   state_estimator:
     ros__parameters:
       plugin_name: ground_truth
-      use_gazebo_tf: True
+      base_frame: ""  # Use gazebo tf tree to get base frame
+      ground_truth:
+        # Use twist from the simulator instead of default (differentiate the pose).
+        twist_sub_topic: "ground_truth/twist"
   controller_manager:
     ros__parameters:
       plugin_name: pid_speed_controller

@@ -11,10 +11,12 @@
       estimator_type: 2 # Estimator type Any(0), complementary(1), kalman(2)
   state_estimator:
     ros__parameters:
-      plugin_name: mocap_pose
-      mocap_topic: "/mocap/rigid_bodies"
-      twist_smooth_filter_cte: 0.1
-      orientation_smooth_filter_cte: 0.1
+      plugin_name: ground_truth
+      ground_truth:
+        mocap_sub_topic: "/mocap/rigid_bodies"  # Non-empty: subscribe to mocap instead of a pose topic.
+        twist_sub_topic: ""  # Empty: differentiate the mocap pose for twist. This is the default.
+        twist_smooth_filter_cte: 0.1  # (0,1]; 1 = no filter. Applies to the differentiated twist.
+        # Note: The rigid_body_name is set for each drone in the specific parameters section below.
   controller_manager:
     ros__parameters:
       plugin_name: pid_speed_controller
@@ -54,12 +56,15 @@
 cf0:
   state_estimator:
     ros__parameters:
-      rigid_body_name: '1'
+      ground_truth:
+        rigid_body_name: '1'
 cf1:
   state_estimator:
     ros__parameters:
-      rigid_body_name: '2'
+      ground_truth:
+        rigid_body_name: '2'
 cf2:
   state_estimator:
     ros__parameters:
-      rigid_body_name: '3'
+      ground_truth:
+        rigid_body_name: '3'
